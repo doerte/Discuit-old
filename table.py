@@ -2,6 +2,7 @@ import sys
 import pandas as pd
 from PyQt5 import QtCore, QtGui, QtWidgets 
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel
 
 from interface.MainWindow import Ui_MainWindow
 
@@ -9,8 +10,6 @@ class TableModel(QtCore.QAbstractTableModel):
 	def __init__(self, data):
 		super().__init__()
 		self._data = data
-		self.fileName = None
-		self.fileContent = ""
 		
 	def data(self, index, role): 
 		if role == Qt.DisplayRole:
@@ -55,8 +54,6 @@ class TableModel(QtCore.QAbstractTableModel):
 				self.fileContents = pd.read_csv(fileName)
 			else:
 				self.fileContents = pd.read_excel(fileName)
-			#self.variables = self.fileContents.columns[section]
-			#print(self.variables)
 		else:
 			self.fileContents = ""
 
@@ -64,16 +61,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 	def __init__(self):
 		super().__init__()
 		self.setupUi(self)
-		
+
 		data = pd.DataFrame()
 		self.model = TableModel(data)
 
 		self.pushButton.clicked.connect(self.browse)
-
+		self.label_2.hide()
 
 	def refreshAll(self, data):
+		#display top 5 (.head()) rows of data file
 		self.model= TableModel(data.head())
 		self.tableView.setModel(self.model)
+		self.label_2.show()
 
 	def browse(self):
 		
@@ -84,6 +83,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		if fileName:
 			self.model.readFile(fileName)
 			data = self.model.fileContents
+			variables = list(self.model.fileContents.columns)
+
+			for variable in variables:
+				print(variable)
+				widget = QLabel(str(variable))
+				self.horizontalLayout.addWidget(widget)
+
+
+
 			self.refreshAll(data)
 
 
