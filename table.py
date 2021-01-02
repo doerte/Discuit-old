@@ -55,6 +55,8 @@ class TableModel(QtCore.QAbstractTableModel):
 				self.fileContents = pd.read_csv(fileName)
 			else:
 				self.fileContents = pd.read_excel(fileName)
+			#self.variables = self.fileContents.columns[section]
+			#print(self.variables)
 		else:
 			self.fileContents = ""
 
@@ -68,10 +70,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 		self.pushButton.clicked.connect(self.browse)
 
-	def refreshAll(self, data):
-		self.model= TableModel(data)
-		self.tableView.setModel(self.model)
 
+	def refreshAll(self, data):
+		self.model= TableModel(data.head())
+		self.tableView.setModel(self.model)
 
 	def browse(self):
 		
