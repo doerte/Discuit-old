@@ -8,6 +8,7 @@ authors = ["Dörte de Kok"]
 python = "^3.7.1"
 PyQt5 = "^5.15.2"
 pandas = "^1.2.0"
+openpyxl = "^3.0.5"
 
 [tool.poetry.dev-dependencies]
 
