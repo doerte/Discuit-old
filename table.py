@@ -70,7 +70,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def refreshAll(self, data, variables):
 		#remove old labels ComboBoxes
-
+		for i in reversed(range(self.gridLayout.count())): 
+			self.gridLayout.itemAt(i).widget().setParent(None)
 
 		#display top 5 (.head()) rows of data file
 		self.model= TableModel(data.head())
