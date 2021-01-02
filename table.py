@@ -3,7 +3,7 @@ import pandas as pd
 from PyQt5 import QtCore, QtGui, QtWidgets 
 from PyQt5.QtCore import Qt
 
-from MainWindow import Ui_MainWindow
+from interface.MainWindow import Ui_MainWindow
 
 class TableModel(QtCore.QAbstractTableModel): 
 	def __init__(self, data):
