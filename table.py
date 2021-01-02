@@ -66,7 +66,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		data = pd.DataFrame()
 		self.model = TableModel(data)
 
-		self.pushButton.pressed.connect(self.browse)
+		self.pushButton.clicked.connect(self.browse)
 
 	def refreshAll(self, data):
 		self.model= TableModel(data)
