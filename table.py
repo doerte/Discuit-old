@@ -2,7 +2,7 @@ import sys
 import pandas as pd
 from PyQt5 import QtCore, QtGui, QtWidgets 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QComboBox
 
 from interface.MainWindow import Ui_MainWindow
 
@@ -68,11 +68,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.pushButton.clicked.connect(self.browse)
 		self.label_2.hide()
 
-	def refreshAll(self, data):
+	def refreshAll(self, data, variables):
+		#remove old labels ComboBoxes
+
+
 		#display top 5 (.head()) rows of data file
 		self.model= TableModel(data.head())
 		self.tableView.setModel(self.model)
 		self.label_2.show()
+		for variable in variables:
+				widget = QLabel(str(variable))
+				selector = QComboBox()
+				selector.addItem("ignore")  
+				selector.addItem("categorical") 
+				selector.addItem("continuous")
+				self.gridLayout.addWidget(widget,0, variables.index(variable))
+				self.gridLayout.addWidget(selector, 1, variables.index(variable))
 
 	def browse(self):
 		
@@ -85,14 +96,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 			data = self.model.fileContents
 			variables = list(self.model.fileContents.columns)
 
-			for variable in variables:
-				print(variable)
-				widget = QLabel(str(variable))
-				self.horizontalLayout.addWidget(widget)
-
-
-
-			self.refreshAll(data)
+			self.refreshAll(data, variables)
 
 
 app = QtWidgets.QApplication(sys.argv)

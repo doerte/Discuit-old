@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>622</width>
-    <height>604</height>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="text">
        <string>Please select for each variable whether it should be treated as a categorical variable (even distribution between sets) or a continuous variable (averages don't differ between sets). You can also choose to disregard a certain variable in set forming.</string>
       </property>
@@ -42,7 +45,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout"/>
+     <layout class="QGridLayout" name="gridLayout"/>
     </item>
     <item>
      <spacer name="verticalSpacer">
@@ -61,6 +64,13 @@
      </spacer>
     </item>
     <item>
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
@@ -73,7 +83,17 @@
      </widget>
     </item>
     <item>
-     <widget class="QTableView" name="tableView"/>
+     <widget class="QTableView" name="tableView">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>200</height>
+       </size>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
