@@ -64,6 +64,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 		data = pd.DataFrame()
 		self.model = TableModel(data)
+		self.label.hide()
+		self.tableView.hide()
 
 		self.pushButton.clicked.connect(self.browse)
 		self.label_2.hide()
@@ -79,11 +81,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 			widget.setStyleSheet('color: red')
 			self.gridLayout.addWidget(widget,0,0)
 
-			data = pd.DataFrame()
-			self.model= TableModel(data)
-			self.tableView.setModel(self.model)
+			self.label.hide()
+			self.tableView.hide()
+			self.label_2.hide()
 
 		else:
+
+			#show table view
+			self.label.show()
+			self.tableView.show()
 
 			#display top 5 (.head()) rows of data file
 			self.model= TableModel(data.head())
