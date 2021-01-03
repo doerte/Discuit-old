@@ -54,6 +54,13 @@ class TableModel(QtCore.QAbstractTableModel):
 				self.fileContents = pd.read_csv(fileName)
 			else:
 				self.fileContents = pd.read_excel(fileName)
+			
+			#add row on top 
+			row = list(self.fileContents.columns)
+			self.fileContents.loc[-1] = row
+			self.fileContents.index = self.fileContents.index + 1  # shifting index
+			self.fileContents.sort_index(inplace=True) 
+
 		else:
 			self.fileContents = ""
 
