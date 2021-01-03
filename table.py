@@ -77,14 +77,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.model= TableModel(data.head())
 		self.tableView.setModel(self.model)
 		self.label_2.show()
-		for variable in variables:
+		count = 0
+
+
+		if len(variables) > 30:
+			widget = QLabel("You cannot include more than 30 variables, please adjust your file.")
+			widget.setStyleSheet('color: red')
+			self.gridLayout.addWidget(widget,0,0)
+		else:
+
+			for variable in variables:
 				widget = QLabel(str(variable))
 				selector = QComboBox()
 				selector.addItem("ignore")  
 				selector.addItem("categorical") 
 				selector.addItem("continuous")
-				self.gridLayout.addWidget(widget,0, variables.index(variable))
-				self.gridLayout.addWidget(selector, 1, variables.index(variable))
+				
+				if count < 6:
+					self.gridLayout.addWidget(widget,0, variables.index(variable))
+					self.gridLayout.addWidget(selector, 1, variables.index(variable))
+				elif count < 12:
+					self.gridLayout.addWidget(widget,2, variables.index(variable)-6)
+					self.gridLayout.addWidget(selector, 3, variables.index(variable)-6)
+				elif count < 18:
+					self.gridLayout.addWidget(widget,4, variables.index(variable)-12)
+					self.gridLayout.addWidget(selector, 5, variables.index(variable)-12)
+				elif count < 24:
+					self.gridLayout.addWidget(widget,6, variables.index(variable)-18)
+					self.gridLayout.addWidget(selector, 7, variables.index(variable)-18)
+				elif count < 30:
+					self.gridLayout.addWidget(widget,8, variables.index(variable)-24)
+					self.gridLayout.addWidget(selector, 9, variables.index(variable)-24)
+
+				count = count + 1
+	
 
 	def browse(self):
 		
