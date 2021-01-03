@@ -73,18 +73,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		for i in reversed(range(self.gridLayout.count())): 
 			self.gridLayout.itemAt(i).widget().setParent(None)
 
-		#display top 5 (.head()) rows of data file
-		self.model= TableModel(data.head())
-		self.tableView.setModel(self.model)
-		self.label_2.show()
-		count = 0
-
-
+		#display table selection boxes for 30 variables, if more than 30 don't display anything
 		if len(variables) > 30:
 			widget = QLabel("You cannot include more than 30 variables, please adjust your file.")
 			widget.setStyleSheet('color: red')
 			self.gridLayout.addWidget(widget,0,0)
+
+			data = pd.DataFrame()
+			self.model= TableModel(data)
+			self.tableView.setModel(self.model)
+
 		else:
+
+			#display top 5 (.head()) rows of data file
+			self.model= TableModel(data.head())
+			self.tableView.setModel(self.model)
+			self.label_2.show()
+			count = 0
+
 
 			for variable in variables:
 				widget = QLabel(str(variable))
