@@ -84,37 +84,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 	def refreshAll(self, data, variables):
 
-		#display table selection boxes for 30 variables, if more than 30 don't display anything
-		if len(variables) > 30:
-			widget = QLabel("You cannot include more than 30 variables, please adjust your file.")
-			widget.setStyleSheet('color: red')
-			self.gridLayout.addWidget(widget,0,0)
+		
+		#show table view
+		self.label.show()
+		self.tableView.show()
 
-			self.label.hide()
-			self.tableView.hide()
-			self.label_2.hide()
-
-		else:
-
-			#show table view
-			self.label.show()
-			self.tableView.show()
-
-			#display top 5 (.head()) rows of data file
-			self.model= TableModel(data.head())
-			self.tableView.setModel(self.model)
+		#display top 5 (.head()) rows of data file
+		self.model= TableModel(data.head())
+		self.tableView.setModel(self.model)
 
 			
-			#get number of columns
-			columns = self.model.columnCount(0)
+		#get number of columns
+		columns = self.model.columnCount(0)
 
-			for column in range(columns):
-				c = QComboBox()
-				c.addItems(['ignore','categorical','continuous'])
-				i = self.tableView.model().index(0,column)
-				self.tableView.setIndexWidget(i,c)	
+		for column in range(columns):
+			c = QComboBox()
+			c.addItems(['ignore','categorical','continuous'])
+			i = self.tableView.model().index(0,column)
+			self.tableView.setIndexWidget(i,c)	
 
-			self.label_2.show()
+		self.label_2.show()
 	
 
 	def browse(self):
