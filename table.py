@@ -83,9 +83,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 		self.label_2.hide()
 
 	def refreshAll(self, data, variables):
-		#remove old labels ComboBoxes
-		for i in reversed(range(self.gridLayout.count())): 
-			self.gridLayout.itemAt(i).widget().setParent(None)
 
 		#display table selection boxes for 30 variables, if more than 30 don't display anything
 		if len(variables) > 30:
