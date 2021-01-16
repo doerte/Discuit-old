@@ -55,9 +55,14 @@ class TableModel(QtCore.QAbstractTableModel):
 			else:
 				self.fileContents = pd.read_excel(fileName)
 			
-			#add row on top 
-			row = list(self.fileContents.columns)
-			self.fileContents.loc[-1] = row
+			#add empty row on top for comboBoxes later on
+			columns = self.fileContents.shape[1]
+			boxes = []
+			for column in range(columns):
+				c = ""
+				boxes.append(c)
+
+			self.fileContents.loc[-1] = boxes
 			self.fileContents.index = self.fileContents.index + 1  # shifting index
 			self.fileContents.sort_index(inplace=True) 
 
@@ -101,34 +106,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 			#display top 5 (.head()) rows of data file
 			self.model= TableModel(data.head())
 			self.tableView.setModel(self.model)
+
+			
+			#get number of columns
+			columns = self.model.columnCount(0)
+
+			for column in range(columns):
+				c = QComboBox()
+				c.addItems(['ignore','categorical','continuous'])
+				i = self.tableView.model().index(0,column)
+				self.tableView.setIndexWidget(i,c)	
+
 			self.label_2.show()
-			count = 0
-
-
-			for variable in variables:
-				widget = QLabel(str(variable))
-				selector = QComboBox()
-				selector.addItem("ignore")  
-				selector.addItem("categorical") 
-				selector.addItem("continuous")
-				
-				if count < 6:
-					self.gridLayout.addWidget(widget,0, variables.index(variable))
-					self.gridLayout.addWidget(selector, 1, variables.index(variable))
-				elif count < 12:
-					self.gridLayout.addWidget(widget,2, variables.index(variable)-6)
-					self.gridLayout.addWidget(selector, 3, variables.index(variable)-6)
-				elif count < 18:
-					self.gridLayout.addWidget(widget,4, variables.index(variable)-12)
-					self.gridLayout.addWidget(selector, 5, variables.index(variable)-12)
-				elif count < 24:
-					self.gridLayout.addWidget(widget,6, variables.index(variable)-18)
-					self.gridLayout.addWidget(selector, 7, variables.index(variable)-18)
-				elif count < 30:
-					self.gridLayout.addWidget(widget,8, variables.index(variable)-24)
-					self.gridLayout.addWidget(selector, 9, variables.index(variable)-24)
-
-				count = count + 1
 	
 
 	def browse(self):
